@@ -1,0 +1,45 @@
+{
+  "name": "vmto",
+  "version": "0.0.0",
+  "description": "velocity(vm) to any other templates.",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test-all"
+  },
+  "config": {
+    "cov": {
+      "threshold": 100
+    }
+  },
+  "dependencies": {
+    "velocity": "~0.5.0"
+  },
+  "devDependencies": {
+    "autod": "*",
+    "contributors": "*",
+    "cov": "*",
+    "istanbul-harmony": "*",
+    "jshint": "*",
+    "mocha": "*",
+    "should": "~3.3.1"
+  },
+  "homepage": "https://github.com/node-modules/vmto",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/node-modules/vmto.git",
+    "web": "https://github.com/node-modules/vmto"
+  },
+  "bugs": {
+    "url": "https://github.com/node-modules/vmto/issues",
+    "email": "fengmk2@gmail.com"
+  },
+  "keywords": [
+    "vmto", "velocity", "vm",
+    "nunjucks"
+  ],
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "author": "fengmk2 <fengmk2@gmail.com> (http://fengmk2.github.com)",
+  "license": "MIT"
+}

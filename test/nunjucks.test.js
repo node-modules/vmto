@@ -55,4 +55,15 @@ describe('nunjucks.test.js', function () {
     vmto.nunjucks("$fooServer.getURI('/foo/bar.htm')")
       .should.equal('{{fooServer.getURI(\'/foo/bar.htm\')}}');
   });
+
+  it('should convert If', function () {
+    vmto.nunjucks('#if($a)\nfoo $a\n#else\n$b else\n#end')
+      .should.equal('{% if a %}\nfoo {{a}}\n{% else %}\n{{b}} else\n{% endif %}');
+    vmto.nunjucks('#if($a)foo#else b#end')
+      .should.equal('{% if a %}foo{% else %} b{% endif %}');
+    vmto.nunjucks('#if($a)\n$a\n#elseif($b)\n$b\n#elseif($c)\n$c\n#end')
+      .should.equal('{% if a %}\n{{a}}\n{% elif b %}\n{{b}}\n{% elif c %}\n{{c}}\n{% endif %}');
+
+    vmto.nunjucks('#if(!$a)\n!$a\n#end').should.equal('{% if !a %}\n!{{a}}\n{% endif %}');
+  });
 });

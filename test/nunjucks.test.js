@@ -64,6 +64,29 @@ describe('nunjucks.test.js', function () {
     vmto.nunjucks('#if($a)\n$a\n#elseif($b)\n$b\n#elseif($c)\n$c\n#end')
       .should.equal('{% if a %}\n{{a}}\n{% elif b %}\n{{b}}\n{% elif c %}\n{{c}}\n{% endif %}');
 
-    vmto.nunjucks('#if(!$a)\n!$a\n#end').should.equal('{% if !a %}\n!{{a}}\n{% endif %}');
+    vmto.nunjucks('#if(!$a)\n!$a\n#end').should.equal('{% if not a %}\n!{{a}}\n{% endif %}');
+
+    vmto.nunjucks('#if($a || $b)\n$a or $b\n#end')
+      .should.equal('{% if a or b %}\n{{a}} or {{b}}\n{% endif %}');
+
+    vmto.nunjucks('#if($a || $b || !$c)\n$a or $b or not $c\n#end')
+      .should.equal('{% if a or b or not c %}\n{{a}} or {{b}} or not {{c}}\n{% endif %}');
+    vmto.nunjucks('#if($a && $b || !$c)\nfoo\n#end')
+      .should.equal('{% if a and b or not c %}\nfoo\n{% endif %}');
+    vmto.nunjucks('#if($a && $b && !$c)\nfoo\n#end')
+      .should.equal('{% if a and b and not c %}\nfoo\n{% endif %}');
+    vmto.nunjucks('#if(($a || $b) && !$c)\nfoo\n#end')
+      .should.equal('{% if (a or b) and not c %}\nfoo\n{% endif %}');
+    vmto.nunjucks('#if($a && ($b || !$c))\nfoo\n#end')
+      .should.equal('{% if a and (b or not c) %}\nfoo\n{% endif %}');
+
+    vmto.nunjucks('#if($a && ($b && !$c))\nfoo\n#end')
+      .should.equal('{% if a and b and not c %}\nfoo\n{% endif %}');
+    vmto.nunjucks('#if(($a || $b) || !$c)\n$a or $b or not $c\n#end')
+      .should.equal('{% if a or b or not c %}\n{{a}} or {{b}} or not {{c}}\n{% endif %}');
+    vmto.nunjucks('#if($a || ($b || !$c))\n$a or $b or not $c\n#end')
+      .should.equal('{% if a or b or not c %}\n{{a}} or {{b}} or not {{c}}\n{% endif %}');
+    vmto.nunjucks('#if($a || ($b || !$c))\n$a or $b or not $c\n#end')
+      .should.equal('{% if a or b or not c %}\n{{a}} or {{b}} or not {{c}}\n{% endif %}');
   });
 });

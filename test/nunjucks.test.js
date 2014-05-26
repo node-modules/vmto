@@ -16,6 +16,7 @@
 
 var should = require('should');
 var vmto = require('../');
+var utils = require('./utils');
 
 describe('nunjucks.test.js', function () {
   it('should convert Reference => Identifier `${name}`', function () {
@@ -88,5 +89,14 @@ describe('nunjucks.test.js', function () {
       .should.equal('{% if a or b or not c %}\n{{a}} or {{b}} or not {{c}}\n{% endif %}');
     vmto.nunjucks('#if($a || ($b || !$c))\n$a or $b or not $c\n#end')
       .should.equal('{% if a or b or not c %}\n{{a}} or {{b}} or not {{c}}\n{% endif %}');
+  });
+
+  it('should convert Comment', function () {
+    vmto.nunjucks('## This is a single line comment.')
+      .should.equal('{# This is a single line comment.#}');
+    vmto.nunjucks('##This is a single line comment.     ')
+      .should.equal('{#This is a single line comment.     #}');
+    vmto.nunjucks(utils.string('multi_comment.vm'))
+      .should.equal(utils.string('multi_comment.nj'));
   });
 });

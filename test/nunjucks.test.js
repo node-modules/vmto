@@ -91,6 +91,13 @@ describe('nunjucks.test.js', function () {
       .should.equal('{% if a or b or not c %}\n{{a}} or {{b}} or not {{c}}\n{% endif %}');
   });
 
+  it('should convert #if("$!uribroker_env"!="")', function () {
+    vmto.nunjucks('#if("$!uribroker_env"!="")\nfoo\n#end')
+      .should.equal('{% if uribroker_env != \'\' %}\nfoo\n{% endif %}');
+    vmto.nunjucks('#if("$!uribroker_env bar"!="bar $foo")\nfoo\n#end')
+      .should.equal('{% if uribroker_env + \' bar\' != \'bar \' + foo %}\nfoo\n{% endif %}');
+  });
+
   it('should convert Comment', function () {
     vmto.nunjucks('## This is a single line comment.')
       .should.equal('{# This is a single line comment.#}');
@@ -98,5 +105,42 @@ describe('nunjucks.test.js', function () {
       .should.equal('{#This is a single line comment.     #}');
     vmto.nunjucks(utils.string('multi_comment.vm'))
       .should.equal(utils.string('multi_comment.nj'));
+  });
+
+  it('should convert Macro', function () {
+    vmto.setMacros({
+      cmsparse: function (path) {
+        return '{% include ' + path + ' %}';
+      },
+    });
+
+    vmto.nunjucks('#cmsparse($uribroker_path)')
+      .should.equal('{% include uribroker_path %}');
+
+    vmto.nunjucks('#cmsparse($uribroker_path, 123)')
+      .should.equal('{% include uribroker_path %}');
+
+    vmto.nunjucks('#macroFoo($uribroker_path)')
+      .should.equal('{% macroFoo(uribroker_path) %}');
+
+    vmto.nunjucks('#macroFoo($uribroker_path, "foo")')
+      .should.equal('{% macroFoo(uribroker_path, \'foo\') %}');
+    vmto.nunjucks('#macroFoo($uribroker_path, \'foo\', 123)')
+      .should.equal('{% macroFoo(uribroker_path, \'foo\', 123) %}');
+
+    vmto.nunjucks(
+'#if("$!uribroker_env"!="") \
+  #set($uribroker_path="alipay/nav/uribroker_$!{uribroker_env}.vm") \
+  #cmsparse($uribroker_path) \
+#end').should.equal(
+'{% if uribroker_env != \'\' %} \
+  {% set uribroker_path = \'alipay/nav/uribroker_\' + uribroker_env + \'.vm\' %} \
+  {% include uribroker_path %} \
+{% endif %}');
+  });
+
+  it('should convert Parse', function () {
+    vmto.nunjucks('#parse($uribroker_path)')
+      .should.equal('{% include uribroker_path %}');
   });
 });

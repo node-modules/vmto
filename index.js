@@ -19,6 +19,10 @@ var NunjucksConvertor = require('./lib/nunjucks');
 
 var nunjucksConvertor = new NunjucksConvertor();
 
+exports.setMacros = function (macros) {
+  nunjucksConvertor.setMacros(macros);
+};
+
 exports.nunjucks = function (src) {
   var ast = parser.parse(src);
   return nunjucksConvertor.to(ast);

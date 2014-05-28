@@ -143,4 +143,26 @@ describe('nunjucks.test.js', function () {
     vmto.nunjucks('#parse($uribroker_path)')
       .should.equal('{% include uribroker_path %}');
   });
+
+  it('should convert Method', function () {
+    vmto.nunjucks('$foo.bar.getSome(\'data\')')
+      .should.equal('{{foo.bar.getSome(\'data\')}}');
+    vmto.nunjucks('$foo.getSome(\'data\')')
+      .should.equal('{{foo.getSome(\'data\')}}');
+  });
+
+  it('should convert Property', function () {
+    vmto.nunjucks('$!systemUtil.hostInfo.name')
+      .should.equal('{{systemUtil.hostInfo.name}}');
+    vmto.nunjucks('$systemUtil.hostInfo.name')
+      .should.equal('{{systemUtil.hostInfo.name}}');
+    vmto.nunjucks('$foo.bar.haha.name')
+      .should.equal('{{foo.bar.haha.name}}');
+    vmto.nunjucks('${foo.bar.haha.name}')
+      .should.equal('{{foo.bar.haha.name}}');
+    vmto.nunjucks('$!foo.bar.haha.name')
+      .should.equal('{{foo.bar.haha.name}}');
+    vmto.nunjucks('$!{foo.bar.haha.name} haha')
+      .should.equal('{{foo.bar.haha.name}} haha');
+  });
 });

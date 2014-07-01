@@ -107,6 +107,13 @@ describe('nunjucks.test.js', function () {
       .should.equal(utils.string('multi_comment.nj'));
   });
 
+  it('should convert #set($uribroker_env="") with emtpy DString', function () {
+    vmto.nunjucks('#set($uribroker_env="")')
+      .should.equal('{% set uribroker_env = \'\' %}');
+    vmto.nunjucks('#set($uribroker_env=" ")')
+      .should.equal('{% set uribroker_env = \' \' %}');
+  });
+
   it('should convert Macro', function () {
     vmto.setMacros({
       cmsparse: function (path) {

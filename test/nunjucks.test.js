@@ -136,13 +136,13 @@ describe('nunjucks.test.js', function () {
       .should.equal('{% macroFoo(uribroker_path, \'foo\', 123) %}');
 
     vmto.nunjucks(
-'#if("$!uribroker_env"!="") \
-  #set($uribroker_path="alipay/nav/uribroker_$!{uribroker_env}.vm") \
-  #cmsparse($uribroker_path) \
+'#if("$!bar_env"!="") \
+  #set($bar_path="foo/nav/bar_$!{bar_env}.vm") \
+  #cmsparse($bar_path) \
 #end').should.equal(
-'{% if uribroker_env != \'\' %} \
-  {% set uribroker_path = \'alipay/nav/uribroker_\' + uribroker_env + \'.vm\' %} \
-  {% include uribroker_path %} \
+'{% if bar_env != \'\' %} \
+  {% set bar_path = \'foo/nav/bar_\' + bar_env + \'.vm\' %} \
+  {% include bar_path %} \
 {% endif %}');
   });
 

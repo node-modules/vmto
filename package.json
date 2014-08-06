@@ -12,7 +12,7 @@
     }
   },
   "dependencies": {
-    "velocity": "~0.5.0"
+    "velocity": "~0.6.9"
   },
   "devDependencies": {
     "autod": "*",
@@ -21,7 +21,7 @@
     "istanbul-harmony": "*",
     "jshint": "*",
     "mocha": "*",
-    "should": "~3.3.1"
+    "should": "~4.0.4"
   },
   "homepage": "https://github.com/node-modules/vmto",
   "repository": {

@@ -31,6 +31,34 @@ console.log(vmto.nunjucks("hello, ${name}!"));
 // hello, {{name}}!
 ```
 
+## options
+
+### macros
+
+custom your macros
+
+```js
+var opt = {
+  macros: {
+    cmsparse: function (path) {
+      return '{% include ' + path + ' %}';
+    }
+  }
+};
+
+vmto.nunjucks('#cmsparse($uribroker_path)', opt)
+// {% include uribroker_path %}
+```
+
+### escape
+
+use safe filter when set escape false
+
+```
+vmto.nunjucks("hello, $name", { escape: false})
+// hello, {{name | safe}}
+```
+
 ## License
 
 (The MIT License)

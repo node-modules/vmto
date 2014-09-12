@@ -115,31 +115,33 @@ describe('nunjucks.test.js', function () {
   });
 
   it('should convert Macro', function () {
-    vmto.setMacros({
-      cmsparse: function (path) {
-        return '{% include ' + path + ' %}';
-      },
-    });
+    var opt = {
+      macros: {
+        cmsparse: function (path) {
+          return '{% include ' + path + ' %}';
+        }
+      }
+    };
 
-    vmto.nunjucks('#cmsparse($uribroker_path)')
+    vmto.nunjucks('#cmsparse($uribroker_path)', opt)
       .should.equal('{% include uribroker_path %}');
 
-    vmto.nunjucks('#cmsparse($uribroker_path, 123)')
+    vmto.nunjucks('#cmsparse($uribroker_path, 123)', opt)
       .should.equal('{% include uribroker_path %}');
 
-    vmto.nunjucks('#macroFoo($uribroker_path)')
+    vmto.nunjucks('#macroFoo($uribroker_path)', opt)
       .should.equal('{% macroFoo(uribroker_path) %}');
 
-    vmto.nunjucks('#macroFoo($uribroker_path, "foo")')
+    vmto.nunjucks('#macroFoo($uribroker_path, "foo")', opt)
       .should.equal('{% macroFoo(uribroker_path, \'foo\') %}');
-    vmto.nunjucks('#macroFoo($uribroker_path, \'foo\', 123)')
+    vmto.nunjucks('#macroFoo($uribroker_path, \'foo\', 123)', opt)
       .should.equal('{% macroFoo(uribroker_path, \'foo\', 123) %}');
 
     vmto.nunjucks(
 '#if("$!bar_env"!="") \
   #set($bar_path="foo/nav/bar_$!{bar_env}.vm") \
   #cmsparse($bar_path) \
-#end').should.equal(
+#end', opt).should.equal(
 '{% if bar_env != \'\' %} \
   {% set bar_path = \'foo/nav/bar_\' + bar_env + \'.vm\' %} \
   {% include bar_path %} \
@@ -171,5 +173,17 @@ describe('nunjucks.test.js', function () {
       .should.equal('{{foo.bar.haha.name}}');
     vmto.nunjucks('$!{foo.bar.haha.name} haha')
       .should.equal('{{foo.bar.haha.name}} haha');
+  });
+
+  it('should convert with escape option', function() {
+    var opt = {
+      escape: false
+    };
+    vmto.nunjucks("hello, $name!", opt).should.equal('hello, {{name | safe}}!');
+    vmto.nunjucks("hello, ${name}!", opt).should.equal('hello, {{name | safe}}!');
+    vmto.nunjucks("hello, ${name}! ${action} ops...", opt).should.equal('hello, {{name | safe}}! {{action | safe}} ops...');
+
+    vmto.nunjucks("hello, $!name!", opt).should.equal('hello, {{name | safe}}!');
+    vmto.nunjucks("hello, $!{name}!", opt).should.equal('hello, {{name | safe}}!');
   });
 });

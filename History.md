@@ -1,4 +1,10 @@
 
+1.0.0 / 2014-09-12
+==================
+
+ * use safe filter when set escape false
+ * update velocity
+
 0.2.2 / 2014-07-01
 ==================
 

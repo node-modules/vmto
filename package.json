@@ -1,6 +1,6 @@
 {
   "name": "vmto",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "velocity(vm) to any other templates.",
   "main": "index.js",
   "scripts": {

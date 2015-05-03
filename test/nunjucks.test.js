@@ -45,6 +45,8 @@ describe('nunjucks.test.js', function () {
     vmto.nunjucks('#set($a = \'foo\')').should.equal('{% set a = \'foo\' %}');
     vmto.nunjucks('#set($a = $b)').should.equal('{% set a = b %}');
     vmto.nunjucks('#set( $a = $b )').should.equal('{% set a = b %}');
+    vmto.nunjucks('#set( $a = ["a", "b"] )').should.equal('{% set a = [\'a\',\'b\'] %}');
+    vmto.nunjucks('#set( $a = "<a href=\'/url\'>some test</a>" )').should.equal('{% set a = \'<a href=\\\'/url\\\'>some test</a>\' %}');
   });
 
   it('should convert Reference => Method', function () {
@@ -185,5 +187,12 @@ describe('nunjucks.test.js', function () {
 
     vmto.nunjucks("hello, $!name!", opt).should.equal('hello, {{name | safe}}!');
     vmto.nunjucks("hello, $!{name}!", opt).should.equal('hello, {{name | safe}}!');
+  });
+
+  it('should convert foreach', function() {
+    vmto.nunjucks('#foreach($item in ["a", "b"])$item#end')
+      .should.equal('{% for item in [\'a\',\'b\'] %}{{item}}{% endfor %}');
+    vmto.nunjucks('#foreach($item in $somelist)$item#end')
+      .should.equal('{% for item in somelist %}{{item}}{% endfor %}');
   });
 });

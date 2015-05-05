@@ -47,6 +47,7 @@ describe('nunjucks.test.js', function () {
     vmto.nunjucks('#set( $a = $b )').should.equal('{% set a = b %}');
     vmto.nunjucks('#set( $a = ["a", "b"] )').should.equal('{% set a = [\'a\',\'b\'] %}');
     vmto.nunjucks('#set( $a = "<a href=\'/url\'>some test</a>" )').should.equal('{% set a = \'<a href=\\\'/url\\\'>some test</a>\' %}');
+    vmto.nunjucks('#set( $a = "$b" )').should.equal('{% set a = \'\' + b %}');
   });
 
   it('should convert Reference => Method', function () {

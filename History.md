@@ -1,4 +1,11 @@
 
+1.1.0 / 2015-05-10
+==================
+
+ * add velocity arraylist support
+ * improve toAssignExpr
+ * add List and forEach support
+
 1.0.1 / 2014-10-31
 ==================
 

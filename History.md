@@ -1,4 +1,11 @@
 
+1.2.0 / 2015-09-30
+==================
+
+ * doc: add VelocityArray usage info to readme
+ * feat: add VelocityArray to repo
+ * test: use codecov
+
 1.1.1 / 2015-09-30
 ==================
 

@@ -48,6 +48,8 @@ describe('nunjucks.test.js', function () {
     vmto.nunjucks('#set( $a = ["a", "b"] )').should.equal('{% set a = VelocityArray(\'a\', \'b\') %}');
     vmto.nunjucks('#set( $a = "<a href=\'/url\'>some test</a>" )').should.equal('{% set a = \'<a href=\\\'/url\\\'>some test</a>\' %}');
     vmto.nunjucks('#set( $a = "$b" )').should.equal('{% set a = \'\' + b %}');
+    vmto.nunjucks('#set($foo="abc <a href=\'$!foo2\' target=\'_blank\' class=\'$!linkInXbox\' seed=\'AQ_CA_noClick\' data-xbox-cfg=\'{w:660,o:true}\'>安装证书</a>。" + "<span class=\'J-security-cert-is-not-use\'></span>")')
+        .should.equal('{% set foo = \'abc <a href=\\\'\' + foo2 + \'\\\' target=\\\'_blank\\\' class=\\\'\' + linkInXbox + \'\\\' seed=\\\'AQ_CA_noClick\\\' data-xbox-cfg=\\\'{w:660,o:true}\\\'>安装证书</a>。\' + \'<span class=\\\'J-security-cert-is-not-use\\\'></span>\' %}');
   });
 
   it('should convert Reference => Method', function () {

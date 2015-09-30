@@ -1,4 +1,10 @@
 
+1.1.1 / 2015-09-30
+==================
+
+ * chore: update .travis.yml
+ * fix: escape quotes and double quotes while dealing with set
+
 1.1.0 / 2015-05-10
 ==================
 

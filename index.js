@@ -20,3 +20,5 @@ exports.nunjucks = function (src, opt) {
   var nunjucksConvertor = new NunjucksConvertor(opt);
   return nunjucksConvertor.to(ast);
 };
+
+exports.VelocityArray = require('./lib/velocity-array');

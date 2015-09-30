@@ -40,6 +40,18 @@ console.log(vmto.nunjucks("hello, ${name}!"));
 // hello, {{name}}!
 ```
 
+**Array support**
+
+vmto transforms ArrayList(eg. [1, 2, 3]) to `VelocityArray(1, 2, 3)` to
+support invocations like `$arr.size()` now(since 1.1.0), you must add
+`vmto.VelocityArray` to your `nunjucks.Environment` instance to get
+things work.
+
+```js
+var env = new nunjucks.Environment(...);
+env.addGlobal(vmto.VelocityArray);
+```
+
 ## options
 
 ### macros

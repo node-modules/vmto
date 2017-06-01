@@ -26,6 +26,11 @@ describe('nunjucks.test.js', function () {
     vmto.nunjucks("hello, $!{name}!").should.equal('hello, {{name}}!');
   });
 
+  it('should convert stirng.length()', function() {
+    vmto.nunjucks("hello, $name.length()!").should.equal('hello, {{name.length}}!');
+    vmto.nunjucks("hello, $name.length(1, 2)!").should.equal('hello, {{name.length(1, 2)}}!');
+  });
+
   it('should convert Reference => Property => Identifier & Prop `$user.nick`', function () {
     vmto.nunjucks("hello, $user.nick!").should.equal('hello, {{user.nick}}!');
     vmto.nunjucks("hello, ${user.nick}!").should.equal('hello, {{user.nick}}!');
